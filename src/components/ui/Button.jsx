@@ -27,7 +27,7 @@ const Button = ({
 
     return (
         <button
-            className={twMerge(BaseStyles, variants[variant], sizes[size], className)}
+            className={twMerge(baseStyles, variants[variant], sizes[size], className)}
             {...props}
         >
             {children}
