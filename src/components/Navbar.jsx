@@ -23,7 +23,7 @@ const Navbar = () => {
                             <div className="w-4 h-4 border-2 border-white rotate-45" />
                         </div>
                         <span className="text-xl font-bold text-white tracking-tight">
-                            Evenza<span className="text-purple-500">.</span>
+                            Toolauncher<span className="text-purple-500">.</span>
                         </span>
                     </div>
 
