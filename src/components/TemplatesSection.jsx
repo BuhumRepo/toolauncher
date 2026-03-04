@@ -18,7 +18,7 @@ const TemplatesSection = () => {
             <Container>
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
-                        High-Converting Funnel <span className="text-primary">Templates</span>
+                        High converting <span className="text-primary">template</span>
                     </h2>
                     <p className="text-lg text-slate-600 max-w-2xl mx-auto">
                         Choose from our library of professionally designed templates optimized for conversion.
