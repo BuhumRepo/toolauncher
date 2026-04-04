@@ -70,11 +70,11 @@ jobs:
         run: |
           curl -X POST "${{ inputs.callback_url }}" \
                -H "Content-Type: application/json" \
-               -d '{"buildId": "${{ inputs.build_id }}", "previewId": "9g5yu6dxwe", "status": "success", "r2Path": "labs/9g5yu6dxwe/builds/${{ inputs.build_id }}.zip"}'
+               -d '{"buildId": "${{ inputs.build_id }}", "previewId": "penpoxkuav", "status": "success", "r2Path": "labs/penpoxkuav/builds/${{ inputs.build_id }}.zip"}'
 
       - name: Notify ArylHive (Failure)
         if: failure()
         run: |
           curl -X POST "${{ inputs.callback_url }}" \
                -H "Content-Type: application/json" \
-               -d '{"buildId": "${{ inputs.build_id }}", "previewId": "9g5yu6dxwe", "status": "failed", "error": "GitHub Actions Build Failed"}'
+               -d '{"buildId": "${{ inputs.build_id }}", "previewId": "penpoxkuav", "status": "failed", "error": "GitHub Actions Build Failed"}'
