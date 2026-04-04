@@ -1,4 +1,4 @@
-name: ArylHive Lab Build
+name: ArylHive Build
 on:
   workflow_dispatch:
     inputs:
@@ -26,16 +26,17 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Cache dependencies
-        id: deps-cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: deps-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/pnpm-lock.yaml') }}
-
       - name: Install Dependencies
-        if: steps.deps-cache.outputs.cache-hit != 'true'
-        run: npm install
+        run: |
+          if [ -f "pnpm-lock.yaml" ]; then
+            npm i -g pnpm && pnpm install --frozen-lockfile
+          elif [ -f "yarn.lock" ]; then
+            yarn install --frozen-lockfile
+          elif [ -f "package-lock.json" ]; then
+            npm ci
+          elif [ -f "package.json" ]; then
+            npm install
+          fi
 
       - name: Build Project
         run: npm run build
@@ -58,7 +59,7 @@ jobs:
           fi
           zip -q -r ../build.zip .
 
-      - name: Upload to ArylCloud B2
+      - name: Upload to ArylCloud
         run: |
           curl -X PUT "${{ inputs.upload_url }}" \
                --upload-file build.zip \
@@ -69,13 +70,11 @@ jobs:
         run: |
           curl -X POST "${{ inputs.callback_url }}" \
                -H "Content-Type: application/json" \
-               -H "Authorization: Bearer ${{ secrets.BUILD_SERVER_SECRET }}" \
-               -d '{"buildId": "${{ inputs.build_id }}", "previewId": "lproj_sp7mgtdzof4w", "status": "success", "r2Path": "labs/lproj_sp7mgtdzof4w/builds/${{ inputs.build_id }}.zip"}'
+               -d '{"buildId": "${{ inputs.build_id }}", "previewId": "lproj_wrwwfjwgzms8", "status": "success", "r2Path": "labs/lproj_wrwwfjwgzms8/builds/${{ inputs.build_id }}.zip"}'
 
       - name: Notify ArylHive (Failure)
         if: failure()
         run: |
           curl -X POST "${{ inputs.callback_url }}" \
                -H "Content-Type: application/json" \
-               -H "Authorization: Bearer ${{ secrets.BUILD_SERVER_SECRET }}" \
-               -d '{"buildId": "${{ inputs.build_id }}", "previewId": "lproj_sp7mgtdzof4w", "status": "failed", "error": "GitHub Actions Build Failed"}'
+               -d '{"buildId": "${{ inputs.build_id }}", "previewId": "lproj_wrwwfjwgzms8", "status": "failed", "error": "GitHub Actions Build Failed"}'
