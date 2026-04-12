@@ -15,8 +15,10 @@ on:
         type: string
 
 env:
-  ARYL_PREVIEW_ID: "9g5yu6dxwe"
-  ARYL_ARTIFACT_PREFIX: "labs/9g5yu6dxwe/builds"
+  CI: "false"
+  NEXT_TELEMETRY_DISABLED: "1"
+  ARYL_PREVIEW_ID: "prj_8008ryf2gfll"
+  ARYL_ARTIFACT_PREFIX: "labs/prj_8008ryf2gfll/builds"
   ARYL_BUILD_CMD: "npm run build"
   ARYL_OUTPUT_DIR: "dist"
 
@@ -89,7 +91,7 @@ jobs:
                  -H "Content-Type: application/zip"
           else
             echo "Push-triggered build: upload handled by callback"
-            curl --retry 3 --retry-delay 5 --retry-all-errors --fail-with-body -X PUT "https://api.aryllabs.com/api/labs/upload-push-build?previewId=9g5yu6dxwe&buildId=${{ steps.ids.outputs.build_id }}" \
+            curl --retry 3 --retry-delay 5 --retry-all-errors --fail-with-body -X PUT "https://api.aryllabs.com/api/labs/upload-push-build?previewId=prj_8008ryf2gfll&buildId=${{ steps.ids.outputs.build_id }}" \
                  --upload-file build.zip \
                  -H "Content-Type: application/zip" \
                  -H "Authorization: Bearer ${{ secrets.ARYL_BUILD_SECRET }}"
@@ -107,7 +109,7 @@ jobs:
           curl --retry 3 --retry-delay 5 --retry-all-errors --fail-with-body -X POST "$FULL_URL" \
                -H "Content-Type: application/json" \
                -H "Authorization: Bearer ${{ secrets.ARYL_BUILD_SECRET }}" \
-               -d '{"buildId": "${{ steps.ids.outputs.build_id }}", "previewId": "9g5yu6dxwe", "status": "success", "r2Path": "labs/9g5yu6dxwe/builds/${{ steps.ids.outputs.build_id }}.zip", "branch": "${{ github.ref_name }}"}'
+               -d '{"buildId": "${{ steps.ids.outputs.build_id }}", "previewId": "prj_8008ryf2gfll", "status": "success", "r2Path": "labs/prj_8008ryf2gfll/builds/${{ steps.ids.outputs.build_id }}.zip", "branch": "${{ github.ref_name }}"}'
 
       - name: Notify ArylHive (Failure)
         if: failure()
@@ -121,4 +123,4 @@ jobs:
           curl --retry 3 --retry-delay 5 --retry-all-errors --fail-with-body -X POST "$FULL_URL" \
                -H "Content-Type: application/json" \
                -H "Authorization: Bearer ${{ secrets.ARYL_BUILD_SECRET }}" \
-               -d '{"buildId": "${{ steps.ids.outputs.build_id }}", "previewId": "9g5yu6dxwe", "status": "failed", "error": "GitHub Actions Build Failed", "branch": "${{ github.ref_name }}"}'
+               -d '{"buildId": "${{ steps.ids.outputs.build_id }}", "previewId": "prj_8008ryf2gfll", "status": "failed", "error": "GitHub Actions Build Failed", "branch": "${{ github.ref_name }}"}'
