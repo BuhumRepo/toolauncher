@@ -20,7 +20,7 @@ env:
   ARYL_PREVIEW_ID: "prj_5apsu9fa4ftd"
   ARYL_ARTIFACT_PREFIX: "labs/prj_5apsu9fa4ftd/builds"
   ARYL_BUILD_CMD: "npm run build"
-  ARYL_OUTPUT_DIR: "out"
+  ARYL_OUTPUT_DIR: "dist"
 
 jobs:
   build:
@@ -66,8 +66,8 @@ jobs:
           ARYL_NO_USER_ENV: "true"
       - name: Package Artifact
         run: |
-          if [ -d "out" ]; then
-            cd out
+          if [ -d "dist" ]; then
+            cd dist
           elif [ -d "dist" ]; then
             cd dist
           elif [ -d "out" ]; then
