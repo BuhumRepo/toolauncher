@@ -17,8 +17,8 @@ on:
 env:
   CI: "false"
   NEXT_TELEMETRY_DISABLED: "1"
-  ARYL_PREVIEW_ID: "prj_5n930khifw42"
-  ARYL_ARTIFACT_PREFIX: "labs/prj_5n930khifw42/builds"
+  ARYL_PREVIEW_ID: "prj_asc50yajnc7o"
+  ARYL_ARTIFACT_PREFIX: "labs/prj_asc50yajnc7o/builds"
   ARYL_BUILD_CMD: "npm run build"
   ARYL_OUTPUT_DIR: "dist"
 
@@ -97,7 +97,7 @@ jobs:
               exit 0
             fi
             echo "Push-triggered build: uploading via API"
-            curl --retry 3 --retry-delay 5 --retry-all-errors --fail-with-body -X PUT "https://api.aryllabs.com/api/labs/upload-push-build?previewId=prj_5n930khifw42&buildId=${{ steps.ids.outputs.build_id }}" \
+            curl --retry 3 --retry-delay 5 --retry-all-errors --fail-with-body -X PUT "https://api.aryllabs.com/api/labs/upload-push-build?previewId=prj_asc50yajnc7o&buildId=${{ steps.ids.outputs.build_id }}" \
                  --upload-file build.zip \
                  -H "Content-Type: application/zip" \
                  -H "Authorization: Bearer $SECRET"
@@ -119,7 +119,7 @@ jobs:
           curl --retry 3 --retry-delay 5 --retry-all-errors --fail-with-body -X POST "$FULL_URL" \
                -H "Content-Type: application/json" \
                -H "Authorization: Bearer ${{ secrets.ARYL_BUILD_SECRET }}" \
-               -d '{"buildId": "${{ steps.ids.outputs.build_id }}", "previewId": "prj_5n930khifw42", "status": "success", "r2Path": "labs/prj_5n930khifw42/builds/${{ steps.ids.outputs.build_id }}.zip", "branch": "${{ github.ref_name }}"}'
+               -d '{"buildId": "${{ steps.ids.outputs.build_id }}", "previewId": "prj_asc50yajnc7o", "status": "success", "r2Path": "labs/prj_asc50yajnc7o/builds/${{ steps.ids.outputs.build_id }}.zip", "branch": "${{ github.ref_name }}"}'
 
       - name: Notify ArylHive (Failure)
         if: failure()
@@ -137,4 +137,4 @@ jobs:
           curl --retry 3 --retry-delay 5 --retry-all-errors --fail-with-body -X POST "$FULL_URL" \
                -H "Content-Type: application/json" \
                -H "Authorization: Bearer ${{ secrets.ARYL_BUILD_SECRET }}" \
-               -d '{"buildId": "${{ steps.ids.outputs.build_id }}", "previewId": "prj_5n930khifw42", "status": "failed", "error": "GitHub Actions Build Failed", "branch": "${{ github.ref_name }}"}'
+               -d '{"buildId": "${{ steps.ids.outputs.build_id }}", "previewId": "prj_asc50yajnc7o", "status": "failed", "error": "GitHub Actions Build Failed", "branch": "${{ github.ref_name }}"}'
